@@ -3,11 +3,9 @@ console.log(`Task 08`);
 import users from './users.js';
 
 const getUsersWithFriend = (users, friendName) => {
-  return users
-    .filter(user => {
-      user.friends.forEach(friend => friend === friendName);
-    })
-    .map(user => user.name);
+  return users.filter(user =>
+    user.friends.some(friend => friend === friendName),
+  );
 };
 
 console.log(getUsersWithFriend(users, 'Briana Decker'));
