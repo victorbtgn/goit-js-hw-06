@@ -63,9 +63,7 @@ console.log(getUsersWithAge(users, 30, 40));
 console.log(`Task 07`);
 
 const calculateTotalBalance = users => {
-  return users
-    .map(user => user.balance)
-    .reduce((acum, value) => acum + value, 0);
+  return users.reduce((total, user) => total + user.balance, 0);
 };
 
 console.log(calculateTotalBalance(users)); // 20916
@@ -73,9 +71,7 @@ console.log(calculateTotalBalance(users)); // 20916
 console.log(`Task 08`);
 
 const getUsersWithFriend = (users, friendName) => {
-  return users.filter(user =>
-    user.friends.some(friend => friend === friendName),
-  );
+  return users.filter(user => user.friends.includes(friendName));
 };
 
 console.log(getUsersWithFriend(users, 'Briana Decker'));
@@ -99,23 +95,17 @@ console.log(getNamesSortedByFriendsCount(users));
 console.log(`Task 10`);
 
 const getSortedUniqueSkills = users => {
-  return skills.sort().reduce(getUniqueSkills, []);
-};
-
-const getSkills = users =>
-  users.reduce((allSkills, user) => {
-    allSkills.push(...user.skills);
-    return allSkills;
+  const getSkills = users =>
+    users.reduce((allSkills, user) => {
+      allSkills.push(...user.skills);
+      return allSkills;
+    }, []);
+  return getSkills(users).reduce((acc, skill) => {
+    if (!acc.includes(skill)) {
+      acc.push(skill);
+    }
+    return acc.sort();
   }, []);
-
-const skills = getSkills(users);
-
-const getUniqueSkills = (acc, skill) => {
-  if (!acc.hasOwnProperty(skill)) {
-    acc[skill] = 0;
-  }
-  acc[skill] += 1;
-  return acc;
 };
 
 console.log(getSortedUniqueSkills(users));
